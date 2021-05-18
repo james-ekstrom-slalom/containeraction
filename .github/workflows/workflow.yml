@@ -15,3 +15,7 @@ jobs:
       run: |
         echo ${{ steps.hello.outputs.myOutput }}
         echo "total memory successfully output"
+    - name: install dbt
+      run: pip install dbt
+    - name: version check dbt
+      run: dbt --version
