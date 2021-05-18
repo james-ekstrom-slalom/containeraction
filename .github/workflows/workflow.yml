@@ -19,3 +19,8 @@ jobs:
       run: pip install dbt==0.19.1
     - name: version check dbt
       run: dbt --version
+    - name: error message
+      run: |
+        echo "::error file=Dockerfile,line=1,col=15::Something went wrong"
+        exit 1
+      
