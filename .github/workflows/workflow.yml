@@ -1,11 +1,14 @@
 on: 
   push:
     branches-ignore:
-      - "main"
+      - "default"
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    env:
+      DBT_SCHEMA: "${{ secrets.DBT_SCHEMA }} ${{ GITHUB_REF##*/ }}"
 
     steps:
     - uses: actions/checkout@v2
@@ -22,3 +25,5 @@ jobs:
       run: pip install dbt==0.19.1
     - name: version check dbt
       run: dbt --version
+    - name: schema
+      run: echo ${{ env.DBT_SCHEMA }} 
