@@ -13,5 +13,5 @@ jobs:
         myInput: 'Reyzor'
     - name: output the memory
       run: |
-        echo ${{ steps.hello.outputs.myOutput }}
+        echo ${{ steps.hello.outputs.memory }}
         echo "total memory successfully output"
