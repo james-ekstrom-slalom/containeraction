@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      DBT_SCHEMA: "${{ secrets.DBT_SCHEMA }} ${{ GITHUB_REF##*/ }}"
+      DBT_SCHEMA: "${{ secrets.DBT_SCHEMA }} ${GITHUB_REF##*/}"
 
     steps:
     - uses: actions/checkout@v2
