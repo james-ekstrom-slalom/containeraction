@@ -7,9 +7,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    env:
-      DBT_SCHEMA: "${{ secrets.DBT_SCHEMA }} ${GITHUB_REF##*/}"
-
     steps:
     - uses: actions/checkout@v2
     - name: run the action
@@ -25,5 +22,7 @@ jobs:
       run: pip install dbt==0.19.1
     - name: version check dbt
       run: dbt --version
+    - name: set schema
+      run: echo "::set-env name=DBT_SCHEMA::${GITHUB_REF##*/} ${{ secrets.DBT_SCHEMA }}"
     - name: schema
       run: echo ${{ env.DBT_SCHEMA }} 
