@@ -1,16 +1,25 @@
 on:
   pull_request:
     branches:
-      - dev
+      - main
 
 jobs:
-  dbt_build:
+  build:
     runs-on: ubuntu-latest
     environment: 
-      name: Dev
+      name: Prod
 
     steps:
     - uses: actions/checkout@v2
+    - name: run the action
+      id: hello
+      uses: ./
+      with:
+        myInput: 'Reyzor'
+    - name: output the memory
+      run: |
+        echo ${{ steps.hello.outputs.myOutput }}
+        echo "total memory successfully output"
     - name: install dbt
       run: pip install dbt==0.19.1
     - name: version check dbt
@@ -19,5 +28,3 @@ jobs:
       run: echo "DBT_SCHEMA='${GITHUB_REF##*/} ${{ secrets.DBT_SCHEMA }}'" >> $GITHUB_ENV
     - name: schema
       run: echo ${{ env.DBT_SCHEMA }} 
-    - name: Try to fail
-      run: exit 1
