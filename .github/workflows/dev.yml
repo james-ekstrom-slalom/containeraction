@@ -19,7 +19,6 @@ jobs:
     - name: output the memory
       run: |
         echo ${{ steps.hello.outputs.myOutput }}
-        echo "total memory successfully output"
     - name: install dbt
       run: pip install dbt==0.19.1
     - name: version check dbt
@@ -28,3 +27,5 @@ jobs:
       run: echo "DBT_SCHEMA='${GITHUB_REF##*/} ${{ secrets.DBT_SCHEMA }}'" >> $GITHUB_ENV
     - name: schema
       run: echo ${{ env.DBT_SCHEMA }} 
+    - name: Try to fail
+      run: exit 1
