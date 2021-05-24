@@ -1,0 +1,20 @@
+on: 
+  pull_request:
+    types: [closed]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    environment:
+      name: DEV
+      
+    if: github.event.pull_request.merged == true
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: test
+      run: echo "branch ${GITHUB_REF##*/} merged"
+    - name: head
+      run: echo "$GITHUB_HEAD_REF"
+    - name: base
+      run: echo "$GITHUB_BASE_REF"
