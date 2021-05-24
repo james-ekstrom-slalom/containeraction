@@ -11,15 +11,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: run the action
-      id: hello
-      uses: ./
-      with:
-        myInput: 'Reyzor'
-    - name: output the memory
-      run: |
-        echo ${{ steps.hello.outputs.myOutput }}
-        echo "total memory successfully output"
     - name: install dbt
       run: pip install dbt==0.19.1
     - name: version check dbt
