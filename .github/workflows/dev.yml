@@ -6,7 +6,6 @@ on:
 
 jobs:
   dbt_build:
-    if: contains(github.event.pull_request.labels.*.name, 'testing')
     runs-on: ubuntu-latest
     environment: 
       name: Dev
@@ -21,5 +20,11 @@ jobs:
       run: echo "DBT_SCHEMA='${GITHUB_REF##*/} ${{ secrets.DBT_SCHEMA }}'" >> $GITHUB_ENV
     - name: schema
       run: echo ${{ env.DBT_SCHEMA }} 
-    - name: Try to fail
-      run: exit 1
+ 
+    - name: dbt run full refresh
+      if: contains(github.event.pull_request.labels.*.name, 'major')
+      run: echo "dbt run --full-refresh"
+
+    - name: dbt run 
+      if: contains(github.event.pull_request.labels.*.name, 'dev')
+      run: echo "dbt run"
