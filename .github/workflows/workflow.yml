@@ -1,7 +1,4 @@
-on: 
-  push:
-    branches-ignore:
-      - "default"
+on: [pull_request]
 
 jobs:
   build_dev:
