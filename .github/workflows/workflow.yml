@@ -4,30 +4,25 @@ on:
       - "default"
 
 jobs:
-  build:
+  build_dev:
+    if: ${{ !contains(github.event.pull_request.base.ref, "dev") }}
     runs-on: ubuntu-latest
     environment: 
       name: Dev
 
     steps:
     - uses: actions/checkout@v2
-    - name: run the action
-      id: hello
-      uses: ./
-      with:
-        myInput: 'Reyzor'
-    - name: output the memory
-      run: |
-        echo ${{ steps.hello.outputs.myOutput }}
-        echo "total memory successfully output"
-    - name: install dbt
-      run: pip install dbt==0.19.1
-    - name: version check dbt
-      run: dbt --version
-    - name: set schema for run
-      run: echo "DBT_SCHEMA=$(echo $a | sed 's/-/_/g' <<< ${{ secrets.DBT_SCHEMA }}_${GITHUB_REF##*/})" >> $GITHUB_ENV
-    - name: clear custom schema
-      run: "dbt run-operation drop_schema --args '{schema: ${{ env.DBT_SCHEMA}} }' --profiles-dir ."
-    - name: schema
-      run: echo ${{ env.DBT_SCHEMA }} 
+    - name: build
+      run: echo "dev build"
+      
+  build_prod:
+    if: ${{ !contains(github.event.pull_request.base.ref, "main") }}
+    runs-on: ubuntu-latest
+    environment: 
+      name: Prod
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: build
+      run: echo "prod build"
       
