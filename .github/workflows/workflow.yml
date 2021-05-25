@@ -5,7 +5,7 @@ on:
 
 jobs:
   build_dev:
-    if: "!contains(github.base_ref, 'main')"
+    if: ${{ github.base_ref != 'main' }}
     runs-on: ubuntu-latest
     environment: 
       name: Dev
@@ -16,7 +16,7 @@ jobs:
       run: echo "dev build"
       
   build_prod:
-    if: "contains(github.base_ref, 'main')"
+    if: ${{ github.base_ref == 'main' }}
     runs-on: ubuntu-latest
     environment: 
       name: Prod
