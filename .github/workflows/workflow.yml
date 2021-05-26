@@ -15,14 +15,3 @@ jobs:
     - name: build
       run: echo "dev build. event= $GITHUB_EVENT_NAME ref= $GITHUB_REF head_ref= $GITHUB_HEAD_REF base_ref= $GITHUB_BASE_REF"
       
-  build_prod:
-    if: ${{ github.base_ref == 'main' }}
-    runs-on: ubuntu-latest
-    environment: 
-      name: Prod
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: build
-      run: echo "prod build. event= $GITHUB_EVENT_NAME ref= $GITHUB_REF head_ref= $GITHUB_HEAD_REF base_ref= $GITHUB_BASE_REF"
-      
