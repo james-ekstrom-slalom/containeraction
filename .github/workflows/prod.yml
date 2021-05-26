@@ -4,27 +4,13 @@ on:
       - main
 
 jobs:
-  build:
+  build_prod:
+    if: ${{ github.base_ref == 'main' }}
     runs-on: ubuntu-latest
     environment: 
       name: Prod
 
     steps:
     - uses: actions/checkout@v2
-    - name: run the action
-      id: hello
-      uses: ./
-      with:
-        myInput: 'Reyzor'
-    - name: output the memory
-      run: |
-        echo ${{ steps.hello.outputs.myOutput }}
-        echo "total memory successfully output"
-    - name: install dbt
-      run: pip install dbt==0.19.1
-    - name: version check dbt
-      run: dbt --version
-    - name: set schema
-      run: echo "DBT_SCHEMA='${GITHUB_REF##*/} ${{ secrets.DBT_SCHEMA }}'" >> $GITHUB_ENV
-    - name: schema
-      run: echo ${{ env.DBT_SCHEMA }} 
+    - name: build
+      run: echo "prod build. event= $GITHUB_EVENT_NAME ref= $GITHUB_REF head_ref= $GITHUB_HEAD_REF base_ref= $GITHUB_BASE_REF"
