@@ -17,7 +17,7 @@ jobs:
     - name: version check dbt
       run: dbt --version
     - name: set schema
-      run: echo "DBT_SCHEMA='${GITHUB_REF##*/} ${{ secrets.DBT_SCHEMA }}'" >> $GITHUB_ENV
+      run: echo "DBT_SCHEMA='${{ github.head_ref }} ${{ secrets.DBT_SCHEMA }}'" >> $GITHUB_ENV
     - name: schema
       run: echo ${{ env.DBT_SCHEMA }} 
  
