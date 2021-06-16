@@ -1,5 +1,6 @@
 on: 
   pull_request:
+    types: [labeled]
     branches:
       - "dev"
 
@@ -13,5 +14,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: build
+      if: contains(github.event.pull_request.labels.*.name, 'build')
       run: echo "dev build. event= $GITHUB_EVENT_NAME ref= $GITHUB_REF head_ref= $GITHUB_HEAD_REF base_ref= $GITHUB_BASE_REF"
       
