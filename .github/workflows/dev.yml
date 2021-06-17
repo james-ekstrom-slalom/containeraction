@@ -10,6 +10,7 @@ jobs:
     environment: 
       name: Dev
 
+    if: github.event.pull_request.merged == true
     steps:
     - uses: actions/checkout@v2
     - name: install dbt
