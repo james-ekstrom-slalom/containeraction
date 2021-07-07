@@ -1,40 +1,20 @@
-on:
-  pull_request:
-    types: [labeled]
-    branches:
-      - dev
+on: [push]
 
 jobs:
   dbt_build:
+    strategy:
+      matrix:
+        lambdas: ["lambda1", "lambda2"]
     runs-on: ubuntu-20.04
     environment: 
       name: Dev
+      
+    env:
+      LAMBDA: ${{ matrix.lambdas }}
 
     steps:
     - uses: actions/checkout@v2
-    - name: install dbt
-      run: pip install dbt==0.19.1
-    - name: version check dbt
-      run: dbt --version
-    - name: set schema
-      run: echo "DBT_SCHEMA='${GITHUB_HEAD_REF##*/} ${{ secrets.DBT_SCHEMA }}'" >> $GITHUB_ENV
-    - name: schema
-      run: echo ${{ env.DBT_SCHEMA }} 
- 
-    - name: dbt run full refresh
-      if: contains(github.event.pull_request.labels.*.name, 'major')
-      run: echo "dbt run --full-refresh"
+    
+    - name: lambda
+      run: echo ${{ env.LAMBDA }} 
 
-    - name: dbt run 
-      if: contains(github.event.pull_request.labels.*.name, 'dev')
-      run: echo "dbt run"
-
-    - name: slack notification
-        uses: archive/github-actions-slack@v2.0.0
-        id: notify
-        with:
-          slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
-          slack-channel: ${{ secrets.SLACK_CHANNEL }}
-          slack-text: Hello! Event "${{ github.event_name }}" in "${{ github.repository }}" 🤓
-      - name: Result from "Send Message"
-        run: echo "The result was ${{ steps.notify.outputs.slack-result }}"
