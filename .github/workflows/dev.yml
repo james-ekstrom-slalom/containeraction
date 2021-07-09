@@ -11,11 +11,11 @@ jobs:
       
     env:
       LAMBDA: ${{ matrix.lambdas }}
-      COMMAND: "{\\"commands\\": [\\"--version\\"]}"
+      COMMAND: "{\"commands\": [\"--version\"]}"
 
     steps:
     - uses: actions/checkout@v2
     
     - name: lambda
-      run: echo $( ${{ env.COMMAND }} | jq -aRs )
+      run: aws stepfunctions start-execution --input "${{ env.COMMAND }}"
 
