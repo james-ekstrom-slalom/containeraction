@@ -11,7 +11,7 @@ jobs:
       
     env:
       LAMBDA: ${{ matrix.lambdas }}
-      COMMAND: "{\"commands\": [\"--version\"]}"
+      COMMAND: "{\\"commands\\": [\\"--version\\"]}"
 
     steps:
     - uses: actions/checkout@v2
