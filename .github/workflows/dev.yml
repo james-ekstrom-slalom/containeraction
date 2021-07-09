@@ -11,10 +11,11 @@ jobs:
       
     env:
       LAMBDA: ${{ matrix.lambdas }}
+      COMMAND: "{\"commands\": [\"--version\"]}"
 
     steps:
     - uses: actions/checkout@v2
     
     - name: lambda
-      run: echo "{\"commands\": [\"--version\"]}"
+      run: echo ${{ env.COMMAND }}
 
