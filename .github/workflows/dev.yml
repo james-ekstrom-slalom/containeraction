@@ -16,6 +16,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: lambda
-      run: aws stepfunctions start-execution --input "${{ env.COMMAND }}"
-
+    - name: zip and push lambdas
+      run: |
+        lambdas=$(ls infrastructure/lambdas) 
+        for lambda in $lambdas; do
+          echo "zipping lambda $lambda"
+          7z a -tzip "$lambda" "./infrastructure/modules/service/lambdas/$lambda/*"
+          echo "aws s3 cp '$lambda.zip' 'lambdas/$lambda.zip"
+        done
