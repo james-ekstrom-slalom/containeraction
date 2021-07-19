@@ -2,9 +2,6 @@ on: [push]
 
 jobs:
   dbt_build:
-    strategy:
-      matrix:
-        lambdas: ["lambda1", "lambda2"]
     runs-on: ubuntu-20.04
     environment: 
       name: Dev
@@ -21,6 +18,6 @@ jobs:
         lambdas=$(ls infrastructure/lambdas) 
         for lambda in $lambdas; do
           echo "zipping lambda $lambda"
-          7z a -tzip "$lambda" "./infrastructure/modules/service/lambdas/$lambda/*"
+          7z a -tzip "$lambda" "./infrastructure/lambdas/$lambda/*"
           echo "aws s3 cp '$lambda.zip' 'lambdas/$lambda.zip"
         done
