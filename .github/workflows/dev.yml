@@ -16,8 +16,5 @@ jobs:
     
     - name: zip and push lambdas
       run: |
-        wget https://github.com/awslabs/aws-data-wrangler/releases/download/2.9.0/${{ env.DATA_WRANGLER }}.zip
-        7z x "${{ env.DATA_WRANGLER }}.zip" -oawswrangler
-        mkdir -p ${{ env.DATA_WRANGLER }}/python/lib/python3.8/site-packages/${{ env.DATA_WRANGLER }}/
-        mv awswrangler/* ${{ env.DATA_WRANGLER }}/python/lib/python3.8/site-packages/${{ env.DATA_WRANGLER }}/ &> /dev/null
-        7z a -tzip "${{ env.DATA_WRANGLER }}.zip" awswrangler
+        cd infrastructure/lambdas/one_lambda
+        pip install -r requirements.txt --target .
