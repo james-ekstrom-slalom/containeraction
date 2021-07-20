@@ -9,15 +9,15 @@ jobs:
     env:
       LAMBDA: ${{ matrix.lambdas }}
       COMMAND: "{\\\"commands\\\": [\\\"--version\\\"]}"
+      DATA_WRANGLER: awswrangler-layer-2.9.0-py3.8
 
     steps:
     - uses: actions/checkout@v2
     
     - name: zip and push lambdas
       run: |
-        lambdas=$(ls infrastructure/lambdas) 
-        for lambda in $lambdas; do
-          echo "zipping lambda $lambda"
-          7z a -tzip "$lambda" "./infrastructure/lambdas/$lambda/*"
-          echo "aws s3 cp '$lambda.zip' 'lambdas/$lambda.zip"
-        done
+        wget https://github.com/awslabs/aws-data-wrangler/releases/download/2.9.0/${{ env.DATA_WRANGLER }}.zip
+        7z x "${{ env.DATA_WRANGLER }}.zip" -oawswrangler
+        mkdir -p awswrangler/python/lib/python3.8/site-packages/${{ env.DATA_WRANGLER }}/
+        mv awswrangler/* awswrangler/python/lib/python3.8/site-packages/${{ env.DATA_WRANGLER }}/ &> /dev/null
+        7z a -tzip "${{ env.DATA_WRANGLER }}.zip" awswrangler
