@@ -21,4 +21,6 @@ jobs:
           if test -f "infrastructure/lambdas/$lambda/requirements.txt"; then
             pip install -r infrastructure/lambdas/$lambda/requirements.txt --target infrastructure/lambdas/$lambda/
           fi
+          
+          ls "infrastructure/lambdas/$lambda/"
         done
