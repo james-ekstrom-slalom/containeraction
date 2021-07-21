@@ -26,7 +26,7 @@ jobs:
         echo "Creating python path"
         ls "${{ env.JSONREF }}/"
         ls "${{ env.JSONREF }}/python/lib/python3.8/site-packages/"
-        mv "${{ env.JSONREF }}/" "${{ env.JSONREF }}/python/lib/python3.8/site-packages/${{ env.JSONREF }}/ &> /dev/null"
+        mv "${{ env.JSONREF }}/" "${{ env.JSONREF }}/python/lib/python3.8/site-packages/${{ env.JSONREF }}/" &> /dev/null
         ls "${{ env.JSONREF }}/"
         tree "${{ env.JSONREF }}"
 
