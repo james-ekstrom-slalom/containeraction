@@ -23,7 +23,7 @@ jobs:
         echo "Extracting ${{ env.JSONREF }}.tar.gz"
         tar xzf ${{ env.JSONREF }}.tar.gz
         ls -la
-        mkdir -p "jsonref/python/lib/python3.8/site-packages/${{ env.JSONREF }}/"
+        mkdir -p "jsonref/python/lib/python3.8/site-packages/"
         
         echo "Creating python path"
         mv "${{ env.JSONREF }}/" "jsonref/python/lib/python3.8/site-packages/"
