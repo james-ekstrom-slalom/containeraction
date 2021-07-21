@@ -18,6 +18,7 @@ jobs:
     - name: zip and push lambdas
       id: zip
       run: |
+        lambdas=$(ls infrastructure/lambdas) 
         for lambda in $lambdas; do
             if test -f "infrastructure/lambdas/$lambda/requirements.txt"; then
               pip install -r infrastructure/lambdas/$lambda/requirements.txt --target infrastructure/lambdas/$lambda/
