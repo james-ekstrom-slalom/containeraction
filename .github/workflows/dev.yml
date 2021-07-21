@@ -24,12 +24,8 @@ jobs:
         mkdir -p "${{ env.JSONREF }}/python/lib/python3.8/site-packages/${{ env.JSONREF }}/"
 
         echo "Creating python path"
-        ls "${{ env.JSONREF }}/"
-        ls "${{ env.JSONREF }}/python/lib/python3.8/site-packages/"
-        mkdir temp
-        mv "${{ env.JSONREF }}/" "temp"
-        ls "temp"
-        tree "temp"
+        tree "${{ env.JSONREF }}"
+        mv "${{ env.JSONREF }}/" "${{ env.JSONREF }}/python/lib/python3.8/site-packages/${{ env.JSONREF }}/"
 
         echo "Zipping ${{ env.JSONREF }}.zip"
         7z a -tzip "${{ env.JSONREF }}.zip" ${{ env.JSONREF }}
