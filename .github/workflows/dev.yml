@@ -16,6 +16,7 @@ jobs:
     - uses: actions/checkout@v2
     
     - name: zip and push lambdas
+      id: zip
       run: |
         wget https://files.pythonhosted.org/packages/b3/cf/93d4f34d76863d4fb995cb8e3e4f29908304065ce6381e0349700c44ad0c/${{ env.JSONREF }}.tar.gz
 
@@ -26,6 +27,7 @@ jobs:
         echo "Pushing ${{ env.JSONREF }}.zip to s3"
 
     - name: create zip
+      if: steps.zip.outputs.exit_code == 0
       run: |
         echo "Creating python path"
         mv "${{ env.JSONREF }}/*" "jsonref/python/lib/python3.8/site-packages/${{ env.JSONREF }}/"
