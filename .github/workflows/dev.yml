@@ -22,17 +22,15 @@ jobs:
 
         echo "Extracting ${{ env.JSONREF }}.tar.gz"
         tar xzf ${{ env.JSONREF }}.tar.gz
+        ls -la
         mkdir -p "jsonref/python/lib/python3.8/site-packages/${{ env.JSONREF }}/"
-
-        echo "Pushing ${{ env.JSONREF }}.zip to s3"
-
-    - name: create zip
-      if: steps.zip.outputs.exit_code == 0
-      run: |
+        
         echo "Creating python path"
-        mv "${{ env.JSONREF }}/*" "jsonref/python/lib/python3.8/site-packages/${{ env.JSONREF }}/"
-        tree "jsonref"
-
+        mv "${{ env.JSONREF }}/" "jsonref/python/lib/python3.8/site-packages/"
+        tree jsonref
+        
         echo "Zipping ${{ env.JSONREF }}.zip"
         7z a -tzip "${{ env.JSONREF }}.zip" jsonref
   
+        tree "jsonref"
+        echo "Pushing ${{ env.JSONREF }}.zip to s3"
