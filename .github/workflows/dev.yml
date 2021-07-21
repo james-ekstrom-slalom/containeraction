@@ -10,19 +10,23 @@ jobs:
       LAMBDA: ${{ matrix.lambdas }}
       COMMAND: "{\\\"commands\\\": [\\\"--version\\\"]}"
       DATA_WRANGLER: awswrangler-layer-2.9.0-py3.8
+      JSONREF: jsonref-0.2
 
     steps:
     - uses: actions/checkout@v2
     
     - name: zip and push lambdas
       run: |
-        lambdas=$(ls infrastructure/lambdas) 
-        python --version
-        pip --version
-        for lambda in $lambdas; do
-          if test -f "infrastructure/lambdas/$lambda/requirements.txt"; then
-            pip install -r infrastructure/lambdas/$lambda/requirements.txt --target infrastructure/lambdas/$lambda/
-          fi
-          
-          ls "infrastructure/lambdas/$lambda/"
-        done
+        wget https://files.pythonhosted.org/packages/b3/cf/93d4f34d76863d4fb995cb8e3e4f29908304065ce6381e0349700c44ad0c/${{ env.JSONREF }}.tar.gz
+
+        echo "Extracting ${{ env.JSONREF }}.tar.gz"
+        tar xzf ${{ env.JSONREF }}.tar.gz
+        mkdir -p ${{ env.JSONREF }}/python/lib/python3.8/site-packages/${{ env.JSONREF }}/
+
+        echo "Creating python path"
+        mv ${{ env.JSONREF }}/* ${{ env.JSONREF }}/python/lib/python3.8/site-packages/${{ env.JSONREF }}/ &> /dev/null
+
+        echo "Zipping ${{ env.JSONREF }}.zip"
+        7z a -tzip "${{ env.JSONREF }}.zip" ${{ env.JSONREF }}
+
+        echo "Pushing ${{ env.JSONREF }}.zip to s3"
