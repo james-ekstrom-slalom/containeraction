@@ -23,11 +23,14 @@ jobs:
         tar xzf ${{ env.JSONREF }}.tar.gz
         mkdir -p "jsonref/python/lib/python3.8/site-packages/${{ env.JSONREF }}/"
 
+        echo "Pushing ${{ env.JSONREF }}.zip to s3"
+
+    - name: create zip
+      run: |
         echo "Creating python path"
         mv "${{ env.JSONREF }}/*" "jsonref/python/lib/python3.8/site-packages/${{ env.JSONREF }}/"
         tree "jsonref"
 
         echo "Zipping ${{ env.JSONREF }}.zip"
         7z a -tzip "${{ env.JSONREF }}.zip" jsonref
-
-        echo "Pushing ${{ env.JSONREF }}.zip to s3"
+  
