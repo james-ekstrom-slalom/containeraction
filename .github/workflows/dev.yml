@@ -27,7 +27,7 @@ jobs:
         echo "Creating python path"
         ls -la jsonref
         sleep 3
-        mv "jsonref/${{ env.JSONREF }}/*" "temp/"
+        mv "jsonref/${{ env.JSONREF }}/" "temp/"
 
         echo "Zipping ${{ env.JSONREF }}.zip"
         7z a -tzip "${{ env.JSONREF }}.zip" ${{ env.JSONREF }}
