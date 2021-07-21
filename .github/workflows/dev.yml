@@ -21,11 +21,11 @@ jobs:
 
         echo "Extracting ${{ env.JSONREF }}.tar.gz"
         tar xzf ${{ env.JSONREF }}.tar.gz
-        mkdir -p "${{ env.JSONREF }}/python/lib/python3.8/site-packages/${{ env.JSONREF }}/"
+        mkdir -p "${{ env.JSONREF }}/python/lib/python3.8/site-packages/"
 
         echo "Creating python path"
+        mv "${{ env.JSONREF }}/" "${{ env.JSONREF }}/python/lib/python3.8/site-packages/"
         tree "${{ env.JSONREF }}"
-        mv "${{ env.JSONREF }}/" "${{ env.JSONREF }}/python/lib/python3.8/site-packages/${{ env.JSONREF }}/"
 
         echo "Zipping ${{ env.JSONREF }}.zip"
         7z a -tzip "${{ env.JSONREF }}.zip" ${{ env.JSONREF }}
