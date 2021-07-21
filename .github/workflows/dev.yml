@@ -18,15 +18,5 @@ jobs:
     - name: zip and push lambdas
       id: zip
       run: |
-        lambdas=$(ls infrastructure/lambdas) 
-        for lambda in $lambdas; do
-            if test -f "infrastructure/lambdas/$lambda/requirements.txt"; then
-              pip install -r infrastructure/lambdas/$lambda/requirements.txt --target infrastructure/lambdas/$lambda/
-              # Remove boto packages since we're deploying to lambda anyway
-              find "infrastructure/lambdas/$lambda/" -type d -name "boto*" -exec rm -r {} +
-            fi
-            ls infrastructure/lambdas/$lambda/
-
-            echo "zipping lambda $lambda"
-            7z a -tzip "$lambda" "./infrastructure/lambdas/$lambda/*"
-          done
+        s3_bucket=$(echo "${{ secrets.S3_BUCKET_URI }}" | sed 's/^s3:\/\///g')
+        echo "$s3_bucket"
