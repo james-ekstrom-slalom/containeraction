@@ -26,9 +26,10 @@ jobs:
         echo "Creating python path"
         ls "${{ env.JSONREF }}/"
         ls "${{ env.JSONREF }}/python/lib/python3.8/site-packages/"
-        mv "${{ env.JSONREF }}/" "${{ env.JSONREF }}/python/lib/python3.8/site-packages/${{ env.JSONREF }}/" &> /dev/null
-        ls "${{ env.JSONREF }}/"
-        tree "${{ env.JSONREF }}"
+        mkdir temp
+        mv "${{ env.JSONREF }}/" "temp"
+        ls "temp"
+        tree "temp"
 
         echo "Zipping ${{ env.JSONREF }}.zip"
         7z a -tzip "${{ env.JSONREF }}.zip" ${{ env.JSONREF }}
