@@ -18,19 +18,13 @@ jobs:
     - name: zip and push lambdas
       id: zip
       run: |
-        wget https://files.pythonhosted.org/packages/b3/cf/93d4f34d76863d4fb995cb8e3e4f29908304065ce6381e0349700c44ad0c/${{ env.JSONREF }}.tar.gz
+        for lambda in $lambdas; do
+            if test -f "infrastructure/lambdas/$lambda/requirements.txt"; then
+              pip install -r infrastructure/lambdas/$lambda/requirements.txt --target infrastructure/lambdas/$lambda/
+              # Remove boto packages since we're deploying to lambda anyway
+              find . -type d -name "infrastructure/lambdas/$lambda/boto*" -exec rm -r {} +
+            fi
 
-        echo "Extracting ${{ env.JSONREF }}.tar.gz"
-        tar xzf ${{ env.JSONREF }}.tar.gz
-        ls -la
-        mkdir -p "jsonref/python/lib/python3.8/site-packages/"
-        
-        echo "Creating python path"
-        mv "${{ env.JSONREF }}/" "jsonref/python/lib/python3.8/site-packages/"
-        tree jsonref
-        
-        echo "Zipping ${{ env.JSONREF }}.zip"
-        7z a -tzip "${{ env.JSONREF }}.zip" jsonref
-  
-        tree "jsonref"
-        echo "Pushing ${{ env.JSONREF }}.zip to s3"
+            echo "zipping lambda $lambda"
+            7z a -tzip "$lambda" "./infrastructure/lambdas/$lambda/*"
+          done
