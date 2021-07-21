@@ -24,6 +24,7 @@ jobs:
               # Remove boto packages since we're deploying to lambda anyway
               find . -type d -name "infrastructure/lambdas/$lambda/boto*" -exec rm -r {} +
             fi
+            ls infrastructure/lambdas/$lambda/
 
             echo "zipping lambda $lambda"
             7z a -tzip "$lambda" "./infrastructure/lambdas/$lambda/*"
