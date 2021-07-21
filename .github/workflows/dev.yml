@@ -23,7 +23,7 @@ jobs:
             if test -f "infrastructure/lambdas/$lambda/requirements.txt"; then
               pip install -r infrastructure/lambdas/$lambda/requirements.txt --target infrastructure/lambdas/$lambda/
               # Remove boto packages since we're deploying to lambda anyway
-              find . -type d -name "infrastructure/lambdas/$lambda/boto*" -exec rm -r {} +
+              find "infrastructure/lambdas/$lambda/" -type d -name "boto*" -exec rm -r {} +
             fi
             ls infrastructure/lambdas/$lambda/
 
