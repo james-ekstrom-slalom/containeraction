@@ -20,10 +20,12 @@ jobs:
         wget https://files.pythonhosted.org/packages/b3/cf/93d4f34d76863d4fb995cb8e3e4f29908304065ce6381e0349700c44ad0c/${{ env.JSONREF }}.tar.gz
 
         echo "Extracting ${{ env.JSONREF }}.tar.gz"
+        mkdir jsonref
         tar xzf ${{ env.JSONREF }}.tar.gz -C jsonref
         mkdir -p "${{ env.JSONREF }}/python/lib/python3.8/site-packages/${{ env.JSONREF }}/"
 
         echo "Creating python path"
+        ls -la
         mv "jsonref/${{ env.JSONREF }}/*" "temp/"
 
         echo "Zipping ${{ env.JSONREF }}.zip"
