@@ -22,5 +22,5 @@ jobs:
         directory: infrastructure/
         quiet: true # optional: display only failed checks
         soft_fail: true # optional: do not return an error code if there are failed checks
-        output_format: json # optional: the output format, one of: cli, json, junitxml, github_failed_only
+        output_format: github_failed_only # optional: the output format, one of: cli, json, junitxml, github_failed_only
         download_external_modules: true # optional: download external terraform modules from public git repositories and terraform registry
