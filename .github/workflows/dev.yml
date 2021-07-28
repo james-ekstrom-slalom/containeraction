@@ -19,7 +19,13 @@ jobs:
       run: pip3 install checkov
     
     - name: run checkov
-      run: checkov -d infrastructure --quiet --compact --soft-fail
+      run: |
+        CHECKOV_RESULTS=$(checkov -d infrastructure --quiet --compact --soft-fail)
+        echo $CHECKOV_RESULTS | grep FAILED || success=true
+        if [ $success ]; then
+          echo "::success"
+        else
+          echo $CHECKOV_RESULTS
+          echo "::warning"
+        fi
       
-    - name: warning
-      run: echo "::warning file=app.js,line=1,col=5::Missing semicolon"
