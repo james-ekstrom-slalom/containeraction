@@ -19,4 +19,4 @@ jobs:
       run: pip3 install checkov
     
     - name: run checkov
-      run: checkov -d infrastructure --quiet --compact
+      run: checkov -d infrastructure --quiet --compact --soft-fail
