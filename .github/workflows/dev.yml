@@ -15,5 +15,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: checkov
+    - name: install checkov
+      run: pip3 install checkov
+    
+    - name: run checkov
       run: checkov -d infrastructure --quiet --compact
