@@ -20,3 +20,6 @@ jobs:
     
     - name: run checkov
       run: checkov -d infrastructure --quiet --compact --soft-fail
+      
+    - name: warning
+      run: echo "::warning file=app.js,line=1,col=5::Missing semicolon"
