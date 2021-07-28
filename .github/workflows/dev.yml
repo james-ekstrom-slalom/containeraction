@@ -15,8 +15,5 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: zip and push lambdas
-      id: zip
-      run: |
-        s3_bucket=$(echo "${{ secrets.S3_BUCKET_URI }}" | sed 's/^s3:\/\///g')
-        echo "$s3_bucket"
+    - name: checkov
+      run: checkov -d infrastructure --quiet --compact
