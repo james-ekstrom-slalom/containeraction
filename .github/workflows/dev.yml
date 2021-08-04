@@ -1,8 +1,10 @@
-on:
-  push:
+on: 
+  pull_request:
+    types: [closed]
+    branches:
+      - "main"
     paths:
-      - '**.tf'
-      - 'Dockerfile'
+      - "infrastructure/lambdas/**"
 
 jobs:
   dbt_build:
