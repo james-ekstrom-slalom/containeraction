@@ -5,7 +5,7 @@ on:
       - "main"
     paths:
       - "infrastructure/lambdas/**"
-      - ".github/workflows/dev.yml
+      - ".github/workflows/dev.yml"
 
 jobs:
   dbt_build:
